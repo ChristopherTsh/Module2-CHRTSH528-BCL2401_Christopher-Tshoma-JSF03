@@ -1,5 +1,5 @@
 <script >
-// import Button from "./components/Button.vue";
+import ProductCard from './components/ProductCard.vue';
 import Button from './components/Button.vue';
 import axios from "axios"
 
@@ -24,12 +24,19 @@ name: "App",
 </script>
 
 <template>
-  <div v-for="item in product" :key="item.id">
-  <h1  class="bg-red">{{ item.title }}</h1>
-  <p>{{ item.price }}</p>
-  
-
-</div>
+  <div class="container mx-auto p-4">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <ProductCard
+        v-for="product in products"
+        :key="product.id"
+        :cardImage="product.image"
+        :cardTitle="product.title"
+        :cardDescription="product.description"
+        :cardPrice="product.price"
+        :cardCategory="product.category"
+      />
+    </div>
+  </div>
 </template>
 
 
