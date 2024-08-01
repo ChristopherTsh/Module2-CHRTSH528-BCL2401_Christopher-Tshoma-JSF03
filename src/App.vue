@@ -1,14 +1,6 @@
-<!-- <template>
-  <div v-for="item in product" :key="item.id">
-  <h1  class="bg-red">{{ item.title }}</h1>
-  <p>{{ item.price }}</p>
-  
-
-</div>
-</template>
-
-<script>
-import Button from "./components/Button.vue";
+<script >
+// import Button from "./components/Button.vue";
+import Button from './components/Button.vue';
 import axios from "axios"
 
 
@@ -29,17 +21,17 @@ name: "App",
     
   }
 }
-</script> -->
-
-<script setup>
-import Button from './components/Button.vue';
 </script>
 
 <template>
-  <div class="space-y-5">
-    <div class="flex gap-5">
-      <Button intent="view product">Primary</Button>
-    </div>
-  </div>
+  <div v-for="item in product" :key="item.id">
+  <h1  class="bg-red">{{ item.title }}</h1>
+  <p>{{ item.price }}</p>
+  
+
+</div>
 </template>
+
+
+
 
