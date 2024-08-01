@@ -1,5 +1,5 @@
 <script setup>
-import { computed } from 'vue';
+import { computed} from 'vue';
 import { cva } from 'class-variance-authority';
 
 const props = defineProps({
@@ -25,9 +25,9 @@ const buttonClass = computed(() => {
         },
       },
     }
-  );
-})({
+  )({
   intent: props.intent,
+});
 });
 </script>
 
