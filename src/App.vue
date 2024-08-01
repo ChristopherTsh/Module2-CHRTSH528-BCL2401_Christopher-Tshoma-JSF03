@@ -1,26 +1,34 @@
-<script >
+<script>
+import {ref, onMounted }from 'vue'
 import ProductCard from './components/ProductCard.vue';
-import Button from './components/Button.vue';
+// import Button from './components/Button.vue';
 import axios from "axios"
 
 
 export default {
 name: "App",
+components:{
+  ProductCard,
+},
 
-  
-  data(){
-    return{
-      product: []
-          }
-  }
+  setup(){
 
-,
-  async mounted(){
-    let results = await axios.get("https://fakestoreapi.com/products");
-    this.product = results.data;
-    
+     const products = ref( []);
+
+onMounted(async () => {
+    try{
+    const results = await axios.get("https://fakestoreapi.com/products");
+    products.value = results.data;
+    }catch(error){
+      console.error('Error fetching products:',error);
+
   }
+});
+return{
+  products
+};
 }
+};
 </script>
 
 <template>
@@ -38,7 +46,3 @@ name: "App",
     </div>
   </div>
 </template>
-
-
-
-
