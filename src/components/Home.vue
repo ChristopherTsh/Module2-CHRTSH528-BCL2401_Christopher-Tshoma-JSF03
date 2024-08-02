@@ -1,67 +1,3 @@
-<script>
-import { ref, onMounted, computed  } from "vue";
-import ProductCard from "./ProductCard.vue";
-import axios from "axios";
-
-export default {
-  name: "App",
-  components: {
-    ProductCard,
-  },
-
-  setup() {
-    const products = ref([]);
-    const categories = ref([]);
-    const isOpen = ref(false);
-    const selectedCategory = ref(null);
-
-
-    const toggleDropdown = () => {
-      isOpen.value = !isOpen.value;
-    };
-
-    const filterProductsByCategory = (category) => {
-      selectedCategory.value = category;
-      isOpen.value = false; // Close the dropdown after selecting a category
-    };
-
-    const filteredProducts = computed(() => {
-      if (selectedCategory.value) {
-        return products.value.filter(product => product.category === selectedCategory.value);
-      }
-      return products.value;
-    });
-    onMounted(async () => {
-      try {
-        const productsResponse = await axios.get("https://fakestoreapi.com/products");
-        products.value = productsResponse.data;
-
-        const  categoriesResponse = await axios.get(
-      "https://fakestoreapi.com/products/categories"
-    );
-    categories.value = categoriesResponse.data;
-      } catch (error) {
-        console.error("Error fetching products:", error);
-      }
-    });
-    return {
-      products,
-      categories,
-      isOpen,
-      selectedCategory,
-      toggleDropdown,
-      filterProductsByCategory,
-      filteredProducts,
-    };
-  },
-};
-
-
-
-
-
-</script>
-
 <template>
   <!-- Dropdown -->
   <div class="relative inline-flex">
@@ -106,7 +42,7 @@ export default {
   <div class="container mx-auto p-4">
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
       <ProductCard
-        v-for="product in products"
+        v-for="product in filteredProducts"
         :key="product.id"
         :cardImage="product.image"
         :cardTitle="product.title"
@@ -117,3 +53,65 @@ export default {
     </div>
   </div>
 </template>
+
+<script>
+import { ref, onMounted, computed } from 'vue';
+import ProductCard from './ProductCard.vue';
+import axios from 'axios';
+
+export default {
+  name: 'App',
+  components: {
+    ProductCard,
+  },
+
+  setup() {
+    const products = ref([]);
+    const categories = ref([]);
+    const isOpen = ref(false);
+    const selectedCategory = ref(null);
+
+    const toggleDropdown = () => {
+      isOpen.value = !isOpen.value;
+    };
+
+    const filterProductsByCategory = (category) => {
+      selectedCategory.value = category;
+      isOpen.value = false; // Close the dropdown after selecting a category
+    };
+
+    const filteredProducts = computed(() => {
+      if (selectedCategory.value) {
+        return products.value.filter(product => product.category === selectedCategory.value);
+      }
+      return products.value;
+    });
+
+    onMounted(async () => {
+      try {
+        const productsResponse = await axios.get('https://fakestoreapi.com/products');
+        products.value = productsResponse.data;
+
+        const categoriesResponse = await axios.get('https://fakestoreapi.com/products/categories');
+        categories.value = categoriesResponse.data;
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    });
+
+    return {
+      products,
+      categories,
+      isOpen,
+      selectedCategory,
+      toggleDropdown,
+      filterProductsByCategory,
+      filteredProducts,
+    };
+  },
+};
+</script>
+
+<style scoped>
+/* Your styles here */
+</style>
