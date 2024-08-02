@@ -33,12 +33,13 @@ export default {
     });
     onMounted(async () => {
       try {
-        const results = await axios.get("https://fakestoreapi.com/products");
-        products.value = results.data;
+        const productsResponse = await axios.get("https://fakestoreapi.com/products");
+        products.value = productsResponse.data;
 
         const  categoriesResponse = await axios.get(
       "https://fakestoreapi.com/products/categories"
     );
+    categories.value = categoriesResponse.data;
       } catch (error) {
         console.error("Error fetching products:", error);
       }
