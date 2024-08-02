@@ -1,7 +1,6 @@
 <script>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed  } from "vue";
 import ProductCard from "./ProductCard.vue";
-// import Navbar from './Navbar.vue';
 import axios from "axios";
 
 export default {
@@ -12,31 +11,48 @@ export default {
 
   setup() {
     const products = ref([]);
+    const categories = ref([]);
+    const isOpen = ref(false);
+    const selectedCategory = ref(null);
 
+
+    const toggleDropdown = () => {
+      isOpen.value = !isOpen.value;
+    };
+
+    const filterProductsByCategory = (category) => {
+      selectedCategory.value = category;
+      isOpen.value = false; // Close the dropdown after selecting a category
+    };
+
+    const filteredProducts = computed(() => {
+      if (selectedCategory.value) {
+        return products.value.filter(product => product.category === selectedCategory.value);
+      }
+      return products.value;
+    });
     onMounted(async () => {
       try {
         const results = await axios.get("https://fakestoreapi.com/products");
         products.value = results.data;
+
+        const  categoriesResponse = await axios.get(
+      "https://fakestoreapi.com/products/categories"
+    );
       } catch (error) {
         console.error("Error fetching products:", error);
       }
     });
     return {
       products,
+      categories,
+      isOpen,
+      selectedCategory,
+      toggleDropdown,
+      filterProductsByCategory,
+      filteredProducts,
     };
   },
-
-   onMounted(async () => {
-  try {
-    const response = await axios.get(
-      "https://fakestoreapi.com/products/categories"
-    );
-     products.value = results.data;
-  } catch (error) {
-    console.log("Error fetching categories", error);
-    throw error;
-  }
-})
 };
 
 
@@ -73,10 +89,14 @@ export default {
       class="absolute z-10 bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 left-0 mt-2"
     >
       <ul class="overflow-hidden w-48 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-        <li class="inline-flex items-center w-full px-4 py-2 border-b border-gray-200 dark:border-gray-600">Profile</li>
-        <li class="inline-flex items-center w-full px-4 py-2 border-b border-gray-200 dark:border-gray-600">Settings</li>
-        <li class="inline-flex items-center w-full px-4 py-2 border-b border-gray-200 dark:border-gray-600">Messages</li>
-        <li class="inline-flex items-center w-full px-4 py-2 border-b border-gray-200 dark:border-gray-600">Download</li>
+        <li
+          v-for="category in categories"
+          :key="category"
+          class="inline-flex items-center w-full px-4 py-2 border-b border-gray-200 dark:border-gray-600 cursor-pointer"
+          @click="filterProductsByCategory(category)"
+        >
+          {{ category }}
+        </li>
       </ul>
     </div>
   </div>
