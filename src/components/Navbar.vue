@@ -14,7 +14,7 @@
           /><span
             class="self-center text-xl font-semibold whitespace-nowrap dark:text-white"
           >
-            Flowbite
+            Home
           </span></a
         ><button
           aria-controls="navbar-default"
@@ -46,7 +46,7 @@
                 href="#"
                 class="block py-2 pr-4 pl-3 rounded md:p-0 bg-blue-700 md:bg-transparent text-white md:text-blue-700 dark:text-white"
               >
-                Home
+                Wish-List
               </a>
             </li>
             <li>
@@ -54,7 +54,7 @@
                 href="#"
                 class="block py-2 pr-4 pl-3 rounded md:p-0 text-gray-700 hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
               >
-                Services
+                cart
               </a>
             </li>
             <li>
@@ -62,17 +62,10 @@
                 href="#"
                 class="block py-2 pr-4 pl-3 rounded md:p-0 text-gray-700 hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
               >
-                Pricing
+                login
               </a>
             </li>
-            <li>
-              <a
-                href="#"
-                class="block py-2 pr-4 pl-3 rounded md:p-0 text-gray-700 hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
-              >
-                Contact
-              </a>
-            </li>
+            <li></li>
           </ul>
         </div>
         <!---->
@@ -83,8 +76,6 @@
 
 <script>
 export default {
-  name: 'Navbar',
+  name: "Navbar",
 };
 </script>
-
-
