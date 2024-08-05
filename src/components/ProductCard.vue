@@ -6,7 +6,9 @@ import Button from "./Button.vue";
 const props = defineProps({
   as:{
     type: [Boolean,String,Number],
-    darkCard: {
+   
+  },
+  darkCard: {
     type: Boolean,
     default: false,
   },
@@ -31,38 +33,20 @@ const props = defineProps({
     default: "",
   },
 
-  },
+  }),
 
- Card:{
-  validator: (val) => ['product card', 'viewed car'].includes(val),
-  default: 'product card',
- }, 
-});
 
 const CardClass = computed(() => {
-  return cva({
-   
-    variats: {
-      Card: {
-        'product card': 'max-w-sm rounded overflow-hidden shadow-lg p-6',
-        'viewed card': 'fixed inset-0 z-30 flex items-end justify-center bg-black/20 p-4 pb-8 backdrop-blur-md sm:items-center lg:p-8',
-      }
-    }
-
-  }
-
-  )
+  props.cardType === 'product card'
+    ? 'max-w-sm rounded overflow-hidden shadow-lg p-6'
+    : 'fixed inset-0 z-30 flex items-end justify-center bg-black/20 p-4 pb-8 backdrop-blur-md sm:items-center lg:p-8';
 }),
  
 
 </script>
 
 <template>
-  <component
-    :class="[
-      darkCard ? 'bg-gray-800 text-white' : 'bg-white text-gray-800',
-    ]"
-  >
+  <div v-if="props.cardType === 'product card'" :class="[cardClass, darkCard ? 'bg-gray-800 text-white' : 'bg-white text-gray-800']">
     <img class="w-2/5" :src="cardImage" alt="Product Image" />
     <div class="px-6 py-4">
       <div class="font-bold text-xl mb-2">{{ cardTitle }}</div>
@@ -74,10 +58,9 @@ const CardClass = computed(() => {
     <div class="px-6 pt-4 pb-2">
       <Button intent="view product">View Product</Button>
     </div>
-  </component>
+  </div>
 
-  <component
-  :is="props.as" :class="viewed card">
+  <div v-else-if="props.cardType === 'viewed card'" :class="[cardClass, darkCard ? 'bg-gray-800 text-white' : 'bg-white text-gray-800']">
   <img class="w-2/5" :src="cardImage" alt="Product Image" />
     <div class="px-6 py-4">
       <div class="font-bold text-xl mb-2">{{ cardTitle }}</div>
@@ -90,5 +73,5 @@ const CardClass = computed(() => {
       <Button intent="Go back">View Product</Button>
     </div>
 
-  </component>
+  </div>
 </template>
