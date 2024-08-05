@@ -1,12 +1,8 @@
 <script setup>
-import { ref, computed } from 'vue';
+import { computed } from 'vue';
 import Button from "./Button.vue";
 
-// Define props
 const props = defineProps({
-  as: {
-    type: [Boolean, String, Number],
-  },
   darkCard: {
     type: Boolean,
     default: false,
@@ -38,7 +34,8 @@ const props = defineProps({
   },
 });
 
-// Computed class for card styling
+const emit = defineEmits(['view-product']);
+
 const cardClass = computed(() => {
   return props.cardType === 'product card'
     ? 'max-w-sm rounded overflow-hidden shadow-lg p-6'
@@ -47,21 +44,7 @@ const cardClass = computed(() => {
 </script>
 
 <template>
-  <!-- Product Card -->
-  <div v-if="props.cardType === 'product card'" :class="[cardClass, darkCard ? 'bg-gray-800 text-white' : 'bg-white text-gray-800']">
-    <img class="w-2/5" :src="cardImage" alt="Product Image" />
-    <div class="px-6 py-4">
-      <div class="font-bold text-xl mb-2">{{ cardTitle }}</div>
-      <p class="text-base">{{ cardCategory }}</p>
-      <p class="text-base font-semibold mt-2">${{ cardPrice }}</p>
-    </div>
-    <div class="px-6 pt-4 pb-2">
-      <Button intent="view product">View Product</Button>
-    </div>
-  </div>
-
-  <!-- Viewed Card -->
-  <div v-else-if="props.cardType === 'viewed card'" :class="[cardClass, darkCard ? 'bg-gray-800 text-white' : 'bg-white text-gray-800']">
+  <div :class="[cardClass, darkCard ? 'bg-gray-800 text-white' : 'bg-white text-gray-800']">
     <img class="w-full" :src="cardImage" alt="Product Image" />
     <div class="px-6 py-4">
       <div class="font-bold text-xl mb-2">{{ cardTitle }}</div>
@@ -69,11 +52,11 @@ const cardClass = computed(() => {
       <p class="text-base font-semibold mt-2">${{ cardPrice }}</p>
     </div>
     <div class="px-6 pt-4 pb-2">
-      <Button intent="go back">Go Back</Button>
+      <Button @click="$emit('view-product')" intent="view product">View Product</Button>
     </div>
   </div>
 </template>
 
-<style>
-/* Add any additional styling here */
+<style scoped>
+/* Your styles here */
 </style>
