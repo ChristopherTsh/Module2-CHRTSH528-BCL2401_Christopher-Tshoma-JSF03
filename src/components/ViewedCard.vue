@@ -23,7 +23,7 @@ onMounted(async () => {
 <template>
   <div v-if="product" class="container mx-auto p-4">
     <div class="bg-white rounded-lg p-6 shadow-lg max-w-md mx-auto">
-      <img class="w-full mb-4" :src="product.image" alt="Product Image" />
+      <img class="w-2/4 mb-4" :src="product.image" alt="Product Image" />
       <div class="px-6 py-4">
         <div class="font-bold text-xl mb-2">{{ product.title }}</div>
         <p class="text-base">{{ product.category }}</p>
@@ -37,6 +37,4 @@ onMounted(async () => {
   </div>
 </template>
 
-<style scoped>
-/* Your styles here */
-</style>
+
