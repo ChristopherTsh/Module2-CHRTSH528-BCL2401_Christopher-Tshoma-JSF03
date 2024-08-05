@@ -1,5 +1,6 @@
 <script setup>
 import { computed } from 'vue';
+import { useRouter } from 'vue-router';
 import Button from "./Button.vue";
 
 const props = defineProps({
@@ -27,20 +28,21 @@ const props = defineProps({
     type: String,
     default: "",
   },
-  cardType: {
-    type: String,
-    default: 'product card',
-    validator: (val) => ['product card', 'viewed card'].includes(val),
+  cardId: {
+    type: Number,
+    required: true,
   },
 });
 
-const emit = defineEmits(['view-product']);
+const router = useRouter();
 
 const cardClass = computed(() => {
-  return props.cardType === 'product card'
-    ? 'max-w-sm rounded overflow-hidden shadow-lg p-6'
-    : 'fixed inset-0 z-30 flex items-end justify-center bg-black/20 p-4 pb-8 backdrop-blur-md sm:items-center lg:p-8';
+  return 'max-w-sm rounded overflow-hidden shadow-lg p-6';
 });
+
+const viewProduct = () => {
+  router.push(`/product/${props.cardId}`);
+};
 </script>
 
 <template>
@@ -52,7 +54,7 @@ const cardClass = computed(() => {
       <p class="text-base font-semibold mt-2">${{ cardPrice }}</p>
     </div>
     <div class="px-6 pt-4 pb-2">
-      <Button @click="$emit('view-product')" intent="view product">View Product</Button>
+      <Button @click="viewProduct" intent="view product">View Product</Button>
     </div>
   </div>
 </template>

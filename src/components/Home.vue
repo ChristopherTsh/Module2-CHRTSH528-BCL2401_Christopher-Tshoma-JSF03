@@ -51,35 +51,21 @@
         :cardDescription="product.description"
         :cardPrice="product.price"
         :cardCategory="product.category"
-        @view-product="selectProduct(product)"
+        :cardId="product.id"
       />
     </div>
-  </div>
-
-  <!-- Viewed Product Card -->
-  <div v-if="selectedProduct" class="fixed inset-0 z-30 flex items-center justify-center bg-black/50 backdrop-blur-md">
-    <ViewedCard
-      :cardImage="selectedProduct.image"
-      :cardTitle="selectedProduct.title"
-      :cardDescription="selectedProduct.description"
-      :cardPrice="selectedProduct.price"
-      :cardCategory="selectedProduct.category"
-      @close-view="selectedProduct = null"
-    />
   </div>
 </template>
 
 <script>
 import { ref, onMounted, computed } from "vue";
 import ProductCard from "./ProductCard.vue";
-import ViewedCard from "./ViewedCard.vue";
 import axios from "axios";
 
 export default {
-  name: "App",
+  name: "Home",
   components: {
     ProductCard,
-    ViewedCard,
   },
 
   setup() {
@@ -87,7 +73,6 @@ export default {
     const categories = ref([]);
     const isOpen = ref(false);
     const selectedCategory = ref(null);
-    const selectedProduct = ref(null);
 
     const toggleDropdown = () => {
       isOpen.value = !isOpen.value;
@@ -96,10 +81,6 @@ export default {
     const filterProductsByCategory = (category) => {
       selectedCategory.value = category;
       isOpen.value = false; // Close the dropdown after selecting a category
-    };
-
-    const selectProduct = (product) => {
-      selectedProduct.value = product;
     };
 
     const filteredProducts = computed(() => {
@@ -135,13 +116,9 @@ export default {
       toggleDropdown,
       filterProductsByCategory,
       filteredProducts,
-      selectedProduct,
-      selectProduct,
     };
   },
 };
 </script>
 
-<!-- <style scoped>
-/* Your styles here */
-</style> -->
+
