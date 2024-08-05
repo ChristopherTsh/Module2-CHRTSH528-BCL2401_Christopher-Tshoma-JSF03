@@ -1,6 +1,5 @@
 <script setup>
-import { computed} from 'vue';
-import { cva } from 'class-variance-authority';
+import { ref, computed} from 'vue';
 import Button from "./Button.vue";
 
 const props = defineProps({
@@ -32,12 +31,17 @@ const props = defineProps({
     type: String,
     default: "",
   },
+  cardType: {
+    type: String,
+    default: 'product card',
+    validator: (val) => ['product card', 'viewed card'].includes(val),
+  },
 
   }),
 
 
 const CardClass = computed(() => {
-  props.cardType === 'product card'
+ return props.cardType === 'product card'
     ? 'max-w-sm rounded overflow-hidden shadow-lg p-6'
     : 'fixed inset-0 z-30 flex items-end justify-center bg-black/20 p-4 pb-8 backdrop-blur-md sm:items-center lg:p-8';
 }),
