@@ -1,11 +1,11 @@
 <script setup>
-import { ref, computed} from 'vue';
+import { ref, computed } from 'vue';
 import Button from "./Button.vue";
 
+// Define props
 const props = defineProps({
-  as:{
-    type: [Boolean,String,Number],
-   
+  as: {
+    type: [Boolean, String, Number],
   },
   darkCard: {
     type: Boolean,
@@ -25,7 +25,7 @@ const props = defineProps({
   },
   cardPrice: {
     type: Number,
-    default: "",
+    default: 0,
   },
   cardCategory: {
     type: String,
@@ -36,27 +36,23 @@ const props = defineProps({
     default: 'product card',
     validator: (val) => ['product card', 'viewed card'].includes(val),
   },
+});
 
-  }),
-
-
-const CardClass = computed(() => {
- return props.cardType === 'product card'
+// Computed class for card styling
+const cardClass = computed(() => {
+  return props.cardType === 'product card'
     ? 'max-w-sm rounded overflow-hidden shadow-lg p-6'
     : 'fixed inset-0 z-30 flex items-end justify-center bg-black/20 p-4 pb-8 backdrop-blur-md sm:items-center lg:p-8';
-}),
- 
-
+});
 </script>
 
 <template>
+  <!-- Product Card -->
   <div v-if="props.cardType === 'product card'" :class="[cardClass, darkCard ? 'bg-gray-800 text-white' : 'bg-white text-gray-800']">
     <img class="w-2/5" :src="cardImage" alt="Product Image" />
     <div class="px-6 py-4">
       <div class="font-bold text-xl mb-2">{{ cardTitle }}</div>
-      <p class="text-base">
-        {{ cardCategory }}
-      </p>
+      <p class="text-base">{{ cardCategory }}</p>
       <p class="text-base font-semibold mt-2">${{ cardPrice }}</p>
     </div>
     <div class="px-6 pt-4 pb-2">
@@ -64,18 +60,20 @@ const CardClass = computed(() => {
     </div>
   </div>
 
+  <!-- Viewed Card -->
   <div v-else-if="props.cardType === 'viewed card'" :class="[cardClass, darkCard ? 'bg-gray-800 text-white' : 'bg-white text-gray-800']">
-  <img class="w-2/5" :src="cardImage" alt="Product Image" />
+    <img class="w-full" :src="cardImage" alt="Product Image" />
     <div class="px-6 py-4">
       <div class="font-bold text-xl mb-2">{{ cardTitle }}</div>
-      <p class="text-base">
-        {{ cardCategory }}
-      </p>
+      <p class="text-base">{{ cardCategory }}</p>
       <p class="text-base font-semibold mt-2">${{ cardPrice }}</p>
     </div>
     <div class="px-6 pt-4 pb-2">
-      <Button intent="Go back">View Product</Button>
+      <Button intent="go back">Go Back</Button>
     </div>
-
   </div>
 </template>
+
+<style>
+/* Add any additional styling here */
+</style>
