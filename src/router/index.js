@@ -20,6 +20,11 @@ const routes = [
     component: ViewedCard,
     props: true,
   },
+  {
+    path: '/login',
+    name: 'Login',
+    component: Login,
+  },
 ];
 
 const router = createRouter({
