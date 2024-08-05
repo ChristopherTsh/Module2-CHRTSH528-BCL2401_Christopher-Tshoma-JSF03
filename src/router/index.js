@@ -2,6 +2,9 @@ import { createRouter, createWebHistory } from 'vue-router';
 import Home from '../components/Home.vue';
 import Navbar from '../components/Navbar.vue';
 import ViewedCard from '../components/ViewedCard.vue';
+import Cart from '../components/Cart.vue';
+import Wishlist from '../components/Wishlist.vue';
+import Login from './Login.vue';
 
 const routes = [
   {
@@ -16,9 +19,14 @@ const routes = [
   },
   {
     path: '/product/:id',
-    name: 'ViewedCardPage',
+    name: 'ViewedCard',
     component: ViewedCard,
     props: true,
+  },
+  {
+    path: '/cart',
+    name: 'Cart',
+    component: Cart,
   },
   {
     path: '/login',
