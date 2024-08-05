@@ -1,6 +1,6 @@
 <script setup>
-import { computed } from 'vue';
-import { useRouter } from 'vue-router';
+import { computed } from "vue";
+import { useRouter } from "vue-router";
 import Button from "./Button.vue";
 
 const props = defineProps({
@@ -37,7 +37,7 @@ const props = defineProps({
 const router = useRouter();
 
 const cardClass = computed(() => {
-  return 'max-w-sm rounded overflow-hidden shadow-lg p-6';
+  return "max-w-sm rounded overflow-hidden shadow-lg p-6";
 });
 
 const viewProduct = () => {
@@ -46,7 +46,12 @@ const viewProduct = () => {
 </script>
 
 <template>
-  <div :class="[cardClass, darkCard ? 'bg-gray-800 text-white' : 'bg-white text-gray-800']">
+  <div
+    :class="[
+      cardClass,
+      darkCard ? 'bg-gray-800 text-white' : 'bg-white text-gray-800',
+    ]"
+  >
     <img class="w-2/4" :src="cardImage" alt="Product Image" />
     <div class="px-6 py-4">
       <div class="font-bold text-xl mb-2">{{ cardTitle }}</div>
