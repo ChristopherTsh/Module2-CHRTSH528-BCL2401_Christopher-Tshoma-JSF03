@@ -25,6 +25,11 @@ const routes = [
     name: 'Login',
     component: Login,
   },
+  {
+    path: '/wishlist',
+    name: 'Wishlist',
+    component: Wishlist,
+  },
 ];
 
 const router = createRouter({
