@@ -1,11 +1,11 @@
 <template>
   <!-- Dropdown -->
-  <div class="relative inline-flex">
+  <div class="flex-auto inline-flex">
     <button
       @click="toggleDropdown"
       class="text-white bg-blue-700 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg dark:bg-blue-600 focus:outline-none dark:focus:ring-blue-800 hover:bg-blue-800 dark:hover:bg-blue-700 text-sm px-4 py-2 inline-flex items-center"
     >
-      Menu
+      category
       <svg
         class="w-4 h-4 ml-2"
         fill="none"
@@ -25,7 +25,9 @@
       v-if="isOpen"
       class="absolute z-10 bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 left-0 mt-2"
     >
-      <ul class="overflow-hidden w-48 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+      <ul
+        class="overflow-hidden w-48 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+      >
         <li
           v-for="category in categories"
           :key="category"
@@ -55,12 +57,12 @@
 </template>
 
 <script>
-import { ref, onMounted, computed } from 'vue';
-import ProductCard from './ProductCard.vue';
-import axios from 'axios';
+import { ref, onMounted, computed } from "vue";
+import ProductCard from "./ProductCard.vue";
+import axios from "axios";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
     ProductCard,
   },
@@ -82,20 +84,26 @@ export default {
 
     const filteredProducts = computed(() => {
       if (selectedCategory.value) {
-        return products.value.filter(product => product.category === selectedCategory.value);
+        return products.value.filter(
+          (product) => product.category === selectedCategory.value
+        );
       }
       return products.value;
     });
 
     onMounted(async () => {
       try {
-        const productsResponse = await axios.get('https://fakestoreapi.com/products');
+        const productsResponse = await axios.get(
+          "https://fakestoreapi.com/products"
+        );
         products.value = productsResponse.data;
 
-        const categoriesResponse = await axios.get('https://fakestoreapi.com/products/categories');
+        const categoriesResponse = await axios.get(
+          "https://fakestoreapi.com/products/categories"
+        );
         categories.value = categoriesResponse.data;
       } catch (error) {
-        console.error('Error fetching data:', error);
+        console.error("Error fetching data:", error);
       }
     });
 
@@ -112,6 +120,6 @@ export default {
 };
 </script>
 
-<style scoped>
+<!-- <style scoped>
 /* Your styles here */
-</style>
+</style> -->

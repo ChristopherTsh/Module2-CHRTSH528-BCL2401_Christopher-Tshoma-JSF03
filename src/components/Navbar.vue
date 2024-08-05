@@ -6,7 +6,7 @@
       <div
         class="container flex flex-wrap justify-between items-center mx-auto"
       >
-        <a class="flex items-center" href="https://www.google.com/"
+        <a class="flex items-center" href=""
           ><img
             src="https://flowbite.com/docs/images/logo.svg"
             alt="Flowbite logo"
