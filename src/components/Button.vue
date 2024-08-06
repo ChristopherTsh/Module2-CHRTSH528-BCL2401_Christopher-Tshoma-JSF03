@@ -1,6 +1,14 @@
 <script setup>
-import { computed} from 'vue';
+import { computed } from 'vue';
 import { cva } from 'class-variance-authority';
+
+/**
+ * Defines the props for the component.
+ * 
+ * @typedef {Object} Props
+ * @property {string|Object} as - The HTML tag or Vue component to render as. Defaults to 'button'.
+ * @property {string} intent - The intent of the button, which determines its styling. Can be 'view product' or 'Go back'. Defaults to 'view product'.
+ */
 
 const props = defineProps({
   as: {
@@ -14,6 +22,11 @@ const props = defineProps({
   },
 });
 
+/**
+ * Computed class for the button, which varies based on the intent prop.
+ * 
+ * @returns {string} - The class string for the button.
+ */
 const buttonClass = computed(() => {
   return cva(
     'inline-flex items-center justify-center text-sm rounded min-h-[32px] px-3 py-0.5 font-semibold',
@@ -26,8 +39,8 @@ const buttonClass = computed(() => {
       },
     }
   )({
-  intent: props.intent,
-});
+    intent: props.intent,
+  });
 });
 </script>
 
