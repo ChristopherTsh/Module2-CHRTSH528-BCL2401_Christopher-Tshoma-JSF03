@@ -8,7 +8,7 @@
     </div>
     <div v-else>
       <!-- Dropdown for Categories -->
-      <div class="flex justify-center space-x-4 mb-4">
+      <div class="flex justify-center space-x-4 mb-4 mt-4">
         <div class="relative inline-flex">
           <button
             @click="toggleDropdown"
@@ -95,7 +95,7 @@
         </div>
 
         <!-- Search Bar -->
-        <div class="relative inline-flex">
+        <div class="sm:hidden md:hidden lg:relative inline-flex ">
           <input
             v-model="searchTerm"
             type="text"
