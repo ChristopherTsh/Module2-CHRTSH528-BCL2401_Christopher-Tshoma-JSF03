@@ -10,9 +10,16 @@
   </template>
   
   <style>
+  /**
+   * Styles for the loading component.
+   */
+  
+  /* Container for the loading animation. Centers the SVG both vertically and horizontally */
   .loading-container {
     background-color: #f3f4f6;
   }
+  
+  /* Styles for the SVG used for the loading animation. Sets the width and height */
   .loading-svg {
     width: 50px;
     height: 50px;
