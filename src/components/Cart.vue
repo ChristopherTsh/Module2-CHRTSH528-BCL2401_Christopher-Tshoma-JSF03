@@ -1,5 +1,5 @@
 <template>
-     <section class="bg-white py-8 antialiased dark:bg-gray-900 md:py-16">
+  <section class="bg-white py-8 antialiased dark:bg-gray-900 md:py-16">
     <div class="mx-auto max-w-screen-xl px-4 2xl:px-0">
       <h2 class="text-xl font-semibold text-gray-900 dark:text-white sm:text-2xl">Shopping Cart</h2>
 
@@ -24,7 +24,7 @@
                           <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h16" />
                         </svg>
                       </button>
-                      <input type="text" :value="product.quantity" class="w-10 shrink-0 border-0 bg-transparent text-center text-sm font-medium text-gray-900 focus:outline-none focus:ring-0 dark:text-white" readonly />
+                      <input type="text" v-model.number="product.quantity" class="w-10 shrink-0 border-0 bg-transparent text-center text-sm font-medium text-gray-900 focus:outline-none focus:ring-0 dark:text-white" readonly />
                       <button @click="incrementQuantity(product.id)" type="button" class="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-md border border-gray-300 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700">
                         <svg class="h-2.5 w-2.5 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
                           <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16" />
@@ -32,7 +32,7 @@
                       </button>
                     </div>
                     <div class="text-end md:order-4 md:w-32">
-                      <p class="text-base font-bold text-gray-900 dark:text-white">${{ product.price * product.quantity }}</p>
+                      <p class="text-base font-bold text-gray-900 dark:text-white">${{ (product.price * product.quantity).toFixed(2) }}</p>
                     </div>
                   </div>
 
@@ -70,7 +70,7 @@
               <div class="space-y-2">
                 <dl class="flex items-center justify-between gap-4">
                   <dt class="text-base font-normal text-gray-500 dark:text-gray-400">Total</dt>
-                  <dd class="text-base font-medium text-gray-900 dark:text-white">${{ cartTotal }}</dd>
+                  <dd class="text-base font-medium text-gray-900 dark:text-white">${{ cartTotal.toFixed(2) }}</dd>
                 </dl>
               </div>
 
@@ -101,15 +101,18 @@
       </div>
     </div>
   </section>
+</template>
 
-  </template>
-  
-  <script>
+<script>
 import { useStore } from 'vuex';
+import { computed } from 'vue';
 
 export default {
   setup() {
     const store = useStore();
+
+    const cart = computed(() => store.state.cart);
+    const cartTotal = computed(() => store.getters.cartTotal);
 
     const removeFromCart = (productId) => {
       store.commit('removeFromCart', productId);
@@ -128,8 +131,8 @@ export default {
     };
 
     return {
-      cart: store.state.cart,
-      cartTotal: store.getters.cartTotal,
+      cart,
+      cartTotal,
       removeFromCart,
       addToFavorites,
       incrementQuantity,
@@ -137,5 +140,4 @@ export default {
     };
   }
 };
-  </script>
-  
+</script>
