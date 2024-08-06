@@ -116,48 +116,6 @@
   <script>
   import { useStore } from 'vuex';
   import { computed } from 'vue';
-
-  /**
- * The route object used to access route parameters.
- * @type {import('vue-router').Route}
- */
-const route = useRoute();
-
-/**
- * The router object used for programmatic navigation.
- * @type {import('vue-router').Router}
- */
-const router = useRouter();
-
-/**
- * Reactive reference to store the product data.
- * @type {import('vue').Ref<Object | null>}
- */
-const product = ref(null);
-
-/**
- * Reactive reference to indicate if the data is being loaded.
- * @type {import('vue').Ref<boolean>}
- */
-const loading = ref(true);
-
-/**
- * Reactive reference to indicate if there was an error fetching data.
- * @type {import('vue').Ref<boolean>}
- */
-const error = ref(false);
-
-/**
- * The ID of the product fetched from route parameters.
- * @type {string | undefined}
- */
-const productId = route.params.id;
-
-/**
- * Fetches product data from an API and handles errors.
- * @async
- * @function
- */
   
   export default {
     setup() {
