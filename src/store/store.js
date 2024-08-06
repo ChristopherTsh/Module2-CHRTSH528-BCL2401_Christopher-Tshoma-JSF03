@@ -32,8 +32,23 @@ const store = createStore({
     removeFromCart(state, productId) {
       state.cart = state.cart.filter(product => product.id !== productId);
     },
+    incrementQuantity(state, productId) {
+      const product = state.cart.find(item => item.id === productId);
+      if (product) {
+        product.quantity++;
+      }
+    },
+    decrementQuantity(state, productId) {
+      const product = state.cart.find(item => item.id === productId);
+      if (product && product.quantity > 1) {
+        product.quantity--;
+      }
+    },
     addToWishlist(state, product) {
-      state.wishlist.push(product);
+      const existingProduct = state.wishlist.find(item => item.id === product.id);
+      if (!existingProduct) {
+        state.wishlist.push(product);
+      }
     },
     removeFromWishlist(state, productId) {
       state.wishlist = state.wishlist.filter(product => product.id !== productId);
@@ -59,7 +74,7 @@ const store = createStore({
       return state.searchTerm;
     },
     cartTotal(state) {
-      return state.cart.reduce((total, product) => total + product.price, 0);
+      return state.cart.reduce((total, product) => total + (product.price * product.quantity), 0);
     },
     isAuthenticated(state) {
       return !!state.user;
