@@ -20,8 +20,13 @@ export default createStore({
       state.searchTerm = term;
     },
     addToCart(state, product) {
-      state.cart.push(product);
-    },
+        const existingProduct = state.cart.find(item => item.id === product.id);
+        if (existingProduct) {
+          existingProduct.quantity += 1;
+        } else {
+          state.cart.push({ ...product, quantity: 1 });
+        }
+      },
     removeFromCart(state, productId) {
       state.cart = state.cart.filter(product => product.id !== productId);
     },

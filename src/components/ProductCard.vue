@@ -58,6 +58,7 @@
 <script setup>
 import { computed, ref } from "vue";
 import { useRouter } from "vue-router";
+import { useStore } from 'vuex';
 import Button from "./Button.vue";
 
 const props = defineProps({
@@ -91,6 +92,7 @@ const props = defineProps({
   },
 });
 
+const store = useStore();
 const router = useRouter();
 
 const cardClass = computed(() => {
@@ -107,13 +109,22 @@ const viewProduct = () => {
 
 const toggleWishlist = () => {
   isInWishlist.value = !isInWishlist.value;
-  // Logic for handling the wishlist addition/removal
   console.log(`Product ${props.cardId} ${isInWishlist.value ? 'added to' : 'removed from'} wishlist`);
 };
 
 const toggleCart = () => {
   isInCart.value = !isInCart.value;
-  // Logic for handling the cart addition/removal
+  if (isInCart.value) {
+    store.commit('addToCart', {
+      id: props.cardId,
+      title: props.cardTitle,
+      price: props.cardPrice,
+      category: props.cardCategory,
+      image: props.cardImage
+    });
+  } else {
+    store.commit('removeFromCart', props.cardId);
+  }
   console.log(`Product ${props.cardId} ${isInCart.value ? 'added to' : 'removed from'} cart`);
 };
 </script>
