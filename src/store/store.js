@@ -1,8 +1,6 @@
-// src/store/index.js
-
 import { createStore } from 'vuex';
 import axios from 'axios';
-import persistState from './plugins/persistState';
+import persistState from './persistState';
 
 const store = createStore({
   state: {
