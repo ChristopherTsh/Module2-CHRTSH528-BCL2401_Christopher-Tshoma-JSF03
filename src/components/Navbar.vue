@@ -20,8 +20,9 @@
           </span>
         </router-link>
         <button
+          @click="toggleMenu"
           aria-controls="navbar-default"
-          aria-expanded="false"
+          aria-expanded="menuOpen"
           class="inline-flex items-center p-2 ml-3 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
           type="button"
         >
@@ -40,7 +41,7 @@
             ></path>
           </svg>
         </button>
-        <div class="w-full md:block md:w-auto hidden">
+        <div :class="['w-full md:block md:w-auto', menuOpen ? '' : 'hidden']" id="navbar-default">
           <ul class="flex flex-col p-4 mt-4 rounded-lg border border-gray-100 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700 bg-gray-50">
             <li>
               <router-link to="/wishlist" class="block py-2 pr-4 pl-3 rounded md:p-0 text-gray-700 hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">
@@ -101,7 +102,33 @@
 </template>
 
 <script>
+import { ref } from 'vue';
+
+/**
+ * Navbar component.
+ * 
+ * This component provides a responsive navigation bar with links to the home, wishlist, cart, and login pages.
+ */
 export default {
   name: 'Navbar',
+  setup() {
+    /**
+     * Ref for storing the menu open state.
+     * @type {import('vue').Ref<boolean>}
+     */
+    const menuOpen = ref(false);
+
+    /**
+     * Toggles the menu open state.
+     */
+    const toggleMenu = () => {
+      menuOpen.value = !menuOpen.value;
+    };
+
+    return {
+      menuOpen,
+      toggleMenu
+    };
+  }
 };
 </script>
