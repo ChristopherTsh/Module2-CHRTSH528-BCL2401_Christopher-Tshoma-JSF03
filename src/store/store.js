@@ -1,5 +1,5 @@
 import { createStore } from 'vuex';
-import axios from 'axios';
+// import axios from 'axios';
 import persistState from './persistState';
 
 const store = createStore({
@@ -80,7 +80,7 @@ const store = createStore({
       return !!state.user;
     }
   },
-  plugins: [persistState]
+  plugins: [persistState()]
 });
 
 export default store;

@@ -14,7 +14,7 @@
             @click="toggleDropdown"
             class="text-white bg-blue-700 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg dark:bg-blue-600 focus:outline-none dark:focus:ring-blue-800 hover:bg-blue-800 dark:hover:bg-blue-700 text-sm px-4 py-2 inline-flex items-center"
           >
-            Category
+            {{ selectedCategory || 'Category' }}
             <svg
               class="w-4 h-4 ml-2"
               fill="none"
@@ -55,7 +55,7 @@
             @click="toggleSortDropdown"
             class="text-white bg-blue-700 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg dark:bg-blue-600 focus:outline-none dark:focus:ring-blue-800 hover:bg-blue-800 dark:hover:bg-blue-700 text-sm px-4 py-2 inline-flex items-center"
           >
-            Sort
+            {{ selectedSortOption || 'Sort' }}
             <svg
               class="w-4 h-4 ml-2"
               fill="none"
@@ -154,24 +154,44 @@ export default {
     const loading = ref(true);
     const error = ref(false);
 
+    const selectedCategory = computed(() => store.getters.getSelectedCategory);
+    const selectedSortOption = computed(() => store.getters.getSortOption);
+
+    /**
+     * Toggles the visibility of the category dropdown menu.
+     */
     const toggleDropdown = () => {
       isCategoryDropdownOpen.value = !isCategoryDropdownOpen.value;
     };
 
+    /**
+     * Toggles the visibility of the sort dropdown menu.
+     */
     const toggleSortDropdown = () => {
       isSortDropdownOpen.value = !isSortDropdownOpen.value;
     };
 
+    /**
+     * Filters products based on the selected category.
+     * @param {string} category - The selected category.
+     */
     const filterProductsByCategory = (category) => {
       store.commit('setSelectedCategory', category);
       isCategoryDropdownOpen.value = false; // Close the dropdown after selecting a category
     };
 
+    /**
+     * Sorts products based on the selected option.
+     * @param {string} option - The selected sorting option.
+     */
     const sortProducts = (option) => {
       store.commit('setSortOption', option);
       isSortDropdownOpen.value = false; // Close the dropdown after selecting a sort option
     };
 
+    /**
+     * Searches for products based on the search term.
+     */
     const searchProducts = () => {
       store.commit('setSearchTerm', searchTerm.value);
     };
@@ -222,6 +242,8 @@ export default {
       categories,
       isCategoryDropdownOpen,
       isSortDropdownOpen,
+      selectedCategory,
+      selectedSortOption,
       toggleDropdown,
       toggleSortDropdown,
       filterProductsByCategory,

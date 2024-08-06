@@ -20,11 +20,6 @@
                   class="h-20 w-20"
                   :alt="product.title"
                 />
-                <img
-                  class="w-full hidden dark:block"
-                  :src="product.image"
-                  alt="Product Image"
-                />
               </div>
   
               <div class="mt-6 sm:mt-8 lg:mt-0">
@@ -37,34 +32,18 @@
                   >
                     ${{ product.price }}
                   </p>
-  
-                  <div class="flex items-center gap-2 mt-2 sm:mt-0">
-                    <div class="flex items-center gap-1">
-                      <svg
-                        class="w-4 h-4 text-yellow-300"
-                        aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        fill="currentColor"
-                        viewBox="0 0 24 24"
-                        v-for="i in 5"
-                        :key="i"
-                      >
-                        <path
-                          d="M13.849 4.22c-.684-1.626-3.014-1.626-3.698 0L8.397 8.387l-4.552.361c-1.775.14-2.495 2.331-1.142 3.477l3.468 2.937-1.06 4.392c-.413 1.713 1.472 3.067 2.992 2.149L12 19.35l3.897 2.354c1.52.918 3.405-.436 2.992-2.15l-1.06-4.39 3.468-2.938c1.353-1.146.633-3.336-1.142-3.477l-4.552-.36-1.754-4.17Z"
-                        />
-                      </svg>
-                    </div>
-                    <p class="text-sm font-medium leading-none text-gray-500 dark:text-gray-400">
-                      (5.0)
-                    </p>
-                    <a
-                      href="#"
-                      class="text-sm font-medium leading-none text-gray-900 underline hover:no-underline dark:text-white"
+                  <div class="svgProduct rating w-52 flex items-left -ml-2 mb-2">
+                    <svg
+                      v-for="i in 5"
+                      :key="i"
+                      :class="i <= Math.round(product.rating?.rate || 0) ? 'filled' : 'empty'"
+                      viewBox="0 0 24 24"
                     >
-                      345 Reviews
-                    </a>
+                      <path
+                        d="M12 .587l3.668 7.571 8.332 1.151-6.063 5.852 1.428 8.287L12 18.897l-7.365 3.851 1.428-8.287-6.063-5.852 8.332-1.151z"
+                      />
+                    </svg>
+                    <span>({{ product.rating?.count || 0 }}reviews)</span>
                   </div>
                 </div>
   
@@ -96,7 +75,7 @@
   
                   <button
                     @click="addToCart(product)"
-                    class="text-white mt-4 sm:mt-0 bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800 flex items-center justify-center"
+                    class="flex items-center justify-center py-2.5 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
                     role="button"
                   >
                     <svg
@@ -134,26 +113,38 @@
   </template>
   
   <script>
-  import { useStore } from "vuex";
+  import { useStore } from 'vuex';
+  import { computed } from 'vue';
   
   export default {
     setup() {
       const store = useStore();
   
+      const wishlist = computed(() => store.state.wishlist);
+  
       const removeFromWishlist = (productId) => {
-        store.commit("removeFromWishlist", productId);
+        store.commit('removeFromWishlist', productId);
       };
   
       const addToCart = (product) => {
-        store.commit("addToCart", product);
+        store.commit('addToCart', product);
       };
   
       return {
-        wishlist: store.state.wishlist,
+        wishlist,
         removeFromWishlist,
         addToCart,
       };
-    },
+    }
   };
   </script>
+  
+  <style scoped>
+  .svgProduct svg.filled path {
+    fill: #ffc107;
+  }
+  .svgProduct svg.empty path {
+    fill: #e0e0e0;
+  }
+  </style>
   
