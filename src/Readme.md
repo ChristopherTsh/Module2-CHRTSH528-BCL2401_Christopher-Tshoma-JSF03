@@ -16,7 +16,7 @@ Welcome to the Product Dashboard project! This application is designed to provid
 
 1. **Clone the Repository**
    ```bash
-   git clone https://github.com/your-username/product-dashboard.git
+   git clone https://github.com/ChristopherTsh/Module2-CHRTSH528-BCL2401_Christopher-Tshoma-JSF03.git
    cd product-dashboard
 
 ## Install Dependencies
