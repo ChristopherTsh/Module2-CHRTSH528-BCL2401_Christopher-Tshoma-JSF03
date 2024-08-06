@@ -6,14 +6,35 @@ import Button from "./Button.vue";
 import LoadingPage from './LoadingPage.vue';
 import NotFoundPage from './NotFoundPage.vue';
 
-const route = useRoute();
-const router = useRouter();
-
+/**
+ * Reactive state for product details, loading status, and error handling.
+ * @type {Object}
+ * @property {Ref<Object|null>} product - The product details object or null if not loaded.
+ * @property {Ref<Boolean>} loading - Boolean indicating if the product data is being loaded.
+ * @property {Ref<Boolean>} error - Boolean indicating if there was an error fetching product data.
+ */
 const product = ref(null);
 const loading = ref(true);
 const error = ref(false);
+
+/**
+ * Vue Router instance for navigation.
+ * @type {Router}
+ */
+const router = useRouter();
+
+/**
+ * Vue Route instance for accessing route parameters.
+ * @type {Route}
+ */
+const route = useRoute();
 const productId = route.params.id;
 
+/**
+ * Fetches product data when the component is mounted.
+ * @async
+ * @function
+ */
 onMounted(async () => {
   try {
     const response = await axios.get(`https://fakestoreapi.com/products/${productId}`);
@@ -28,12 +49,17 @@ onMounted(async () => {
 </script>
 
 <template>
+  <!-- Show loading page while data is being fetched -->
   <div v-if="loading">
     <LoadingPage />
   </div>
+
+  <!-- Show not found page if there is an error fetching data -->
   <div v-else-if="error">
     <NotFoundPage />
   </div>
+
+  <!-- Show product details if data is successfully fetched -->
   <div v-else class="container mx-auto p-4">
     <div class="bg-white rounded-lg p-6 shadow-lg max-w-md mx-auto">
       <img class="w-2/4 mb-4" :src="product.image" alt="Product Image" />
@@ -44,6 +70,7 @@ onMounted(async () => {
         <p class="text-base font-semibold mt-2">${{ product.price }}</p>
       </div>
       <div class="svgProduct rating w-52 flex items-left -ml-2 mb-2">
+        <!-- Display star rating based on product rating -->
         <svg
           v-for="i in 5"
           :key="i"
@@ -64,9 +91,12 @@ onMounted(async () => {
 </template>
 
 <style>
+/** Style for filled star rating */
 .filled {
   fill: gold; 
 }
+
+/** Style for empty star rating */
 .empty {
   fill: lightgray;
 }
