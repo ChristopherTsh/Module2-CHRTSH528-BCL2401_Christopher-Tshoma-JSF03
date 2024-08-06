@@ -1,6 +1,10 @@
-import { createStore } from 'vuex';
+// src/store/index.js
 
-export default createStore({
+import { createStore } from 'vuex';
+import axios from 'axios';
+import persistState from './plugins/persistState';
+
+const store = createStore({
   state: {
     selectedCategory: null,
     sortOption: null,
@@ -20,13 +24,13 @@ export default createStore({
       state.searchTerm = term;
     },
     addToCart(state, product) {
-        const existingProduct = state.cart.find(item => item.id === product.id);
-        if (existingProduct) {
-          existingProduct.quantity += 1;
-        } else {
-          state.cart.push({ ...product, quantity: 1 });
-        }
-      },
+      const existingProduct = state.cart.find(item => item.id === product.id);
+      if (existingProduct) {
+        existingProduct.quantity += 1;
+      } else {
+        state.cart.push({ ...product, quantity: 1 });
+      }
+    },
     removeFromCart(state, productId) {
       state.cart = state.cart.filter(product => product.id !== productId);
     },
@@ -41,7 +45,10 @@ export default createStore({
     },
     logout(state) {
       state.user = null;
-    }
+    },
+    setState(state, newState) {
+      Object.assign(state, newState);
+    },
   },
   getters: {
     getSelectedCategory(state) {
@@ -59,5 +66,8 @@ export default createStore({
     isAuthenticated(state) {
       return !!state.user;
     }
-  }
+  },
+  plugins: [persistState]
 });
+
+export default store;

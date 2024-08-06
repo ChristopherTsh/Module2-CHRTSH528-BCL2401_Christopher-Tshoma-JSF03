@@ -100,7 +100,9 @@ const cardClass = computed(() => {
 });
 
 // States for wishlist and cart
-const isInWishlist = ref(false);
+const isInWishlist = computed(() =>
+  store.state.wishlist.some((product) => product.id === props.cardId)
+);
 const isInCart = ref(false);
 
 const viewProduct = () => {
@@ -108,8 +110,17 @@ const viewProduct = () => {
 };
 
 const toggleWishlist = () => {
-  isInWishlist.value = !isInWishlist.value;
-  console.log(`Product ${props.cardId} ${isInWishlist.value ? 'added to' : 'removed from'} wishlist`);
+  if (isInWishlist.value) {
+    store.commit('removeFromWishlist', props.cardId);
+    console.log(`Product ${props.cardId} removed from wishlist`);
+  } else {
+    store.commit('addToWishlist', {
+      id: props.cardId,
+      title: props.cardTitle,
+      price: props.cardPrice,
+    });
+    console.log(`Product ${props.cardId} added to wishlist`);
+  }
 };
 
 const toggleCart = () => {
