@@ -17,22 +17,47 @@
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 
+/**
+ * Login component.
+ * 
+ * This component provides a login form for users to enter their username and password.
+ * It includes navigation options for signing up and resetting forgotten passwords.
+ */
 export default {
   setup() {
+    /**
+     * Ref for storing the username input.
+     * @type {import('vue').Ref<string>}
+     */
     const username = ref('');
+
+    /**
+     * Ref for storing the password input.
+     * @type {import('vue').Ref<string>}
+     */
     const password = ref('');
+
     const router = useRouter();
 
+    /**
+     * Handles the login form submission.
+     */
     const login = () => {
       // Perform login logic here
       console.log(`Logging in with username: ${username.value}, password: ${password.value}`);
       router.push('/');
     };
 
+    /**
+     * Navigates to the sign-up page.
+     */
     const navigateToSignup = () => {
       router.push('/signup');
     };
 
+    /**
+     * Navigates to the forgot password page.
+     */
     const navigateToForgotPassword = () => {
       router.push('/forgot-password');
     };
