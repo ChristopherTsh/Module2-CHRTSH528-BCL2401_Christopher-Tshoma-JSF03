@@ -61,6 +61,17 @@ import { useRouter } from "vue-router";
 import { useStore } from 'vuex';
 import Button from "./Button.vue";
 
+/**
+ * Props for the card component.
+ * @typedef {Object} Props
+ * @property {Boolean} darkCard - Determines if the card is in dark mode.
+ * @property {String} cardImage - The image URL for the card.
+ * @property {String} cardTitle - The title of the card.
+ * @property {String} cardDescription - The description of the card.
+ * @property {Number} cardPrice - The price of the product.
+ * @property {String} cardCategory - The category of the product.
+ * @property {Number} cardId - The unique ID of the product.
+ */
 const props = defineProps({
   darkCard: {
     type: Boolean,
@@ -105,10 +116,16 @@ const isInWishlist = computed(() =>
 );
 const isInCart = ref(false);
 
+/**
+ * Navigates to the product detail page.
+ */
 const viewProduct = () => {
   router.push(`/product/${props.cardId}`);
 };
 
+/**
+ * Toggles the wishlist status of the product.
+ */
 const toggleWishlist = () => {
   if (isInWishlist.value) {
     store.commit('removeFromWishlist', props.cardId);
@@ -123,6 +140,9 @@ const toggleWishlist = () => {
   }
 };
 
+/**
+ * Toggles the cart status of the product.
+ */
 const toggleCart = () => {
   isInCart.value = !isInCart.value;
   if (isInCart.value) {
